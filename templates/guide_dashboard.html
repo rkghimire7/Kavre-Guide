@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Travel Guide</title>
+    <style>
+        .header_phone {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 30px; 
+        }
+
+        .welcome_text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .welcome_message {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px; 
+        }
+
+        .username {
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        /* Adjusting margin to ensure proper spacing */
+        .ml-auto {
+            margin-left: 40px !important;
+        }
+
+    
+     
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Travello template project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+</head>
+<body>
+
+    <div class="super_container">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                            <div class="header_content_inner d-flex flex-row align-items-center justify-content-start">
+                                
+                                <!-- Logo -->
+                                <div class="logo" style="white-space: nowrap; margin-right: 20px;">
+                                    <a href="">Kavre Guide</a>
+                                </div>
+
+                                <!-- Navigation -->
+                                <nav class="main_nav">
+                                    <ul class="d-flex flex-row align-items-start justify-content-start">
+                                        <li ><a href="{% url 'index' %}">Home</a></li>
+                                        <li><a href="{% url 'about' %}">About Us</a></li>
+                                        <li><a href="{% url 'news' %}">Guides</a></li>
+										{% if user.is_authenticated %}
+											<li class="active"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+									 	{% else %}
+											<li><a href="{% url 'guide' %}">I am a Guide</a></li>
+									  	{% endif %}
+                                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                                        <li><a href="{% url 'destinations' %}">Destinations</a></li>
+
+                                        {% if user.is_authenticated %}
+                                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                                        {% else %}
+                                            <li><a href="{% url 'register' %}">Register</a></li>
+                                            <li><a href="{% url 'login' %}">Login</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+
+                                <!-- Welcome Section (If user is authenticated) -->
+                                {% if user.is_authenticated %}
+                                    <div class="header_phone ml-auto">
+                                        <div class="welcome_text">
+                                            <span class="welcome_message">Welcome,</span>
+                                            <span class="username">{{ user.first_name }}</span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <!-- Hamburger Menu -->
+                                <div class="hamburger ml-auto">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="header_social d-flex flex-row align-items-center justify-content-start">
+                <ul class="d-flex flex-row align-items-start justify-content-start">
+                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </header>
+    </div>
+
+	
+	<!-- Home -->
+
+	<div class="home">
+		
+		<!-- Home Slider -->
+		<div class="home_slider_container">
+			<div class="owl-carousel owl-theme home_slider">
+				
+                <div class="dashboard-container">
+                    <h1>Guide Dashboard</h1>
+                     <p>Manage your Bookings and Messages here</p>
+                     <h2>Bookings</h2>
+                    <div class="booking-list">
+                        {% if user_bookings %}
+                            {% for booking in user_bookings %}
+                                <div class="booking-card">
+                                     <div class="booking-card-header">
+                                         {% if booking.user %}
+                                            <!-- <img src="{{ booking.user.profile_pic.url }}" alt="{{ booking.user.first_name }} {{booking.user.last_name}}" class="booking-card-img"/> -->
+                                            {{booking.user.first_name}} {{booking.user.last_name}}
+                                            {% else %}
+                                              N/A
+                                         {% endif %}
+                                      </div>
+                                    <div class="booking-card-body">
+                                        <p><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
+                                         <p><strong>Preferred Date:</strong>
+                                                {% if booking.preferred_date %}
+                                                     {{ booking.preferred_date }}
+                                                 {% else %}
+                                                     N/A
+                                                  {% endif %}
+                                                </p>
+                                        <p><strong>Status:</strong> {{ booking.get_status_display }}</p>
+                                         <p><strong>Party Size:</strong> {{booking.party_size}}</p>
+                                         <div class="booking-message-wrapper">
+                                          <p><strong>Message from tourist:</strong> {{ booking.message }}</p>
+                                            {% if booking.messages.all %}
+                                              {% for message in booking.messages.all %}
+                                                   <div class="tourguide-message">
+                                                       <p><strong>Tour Guide reply: </strong>{{ message.content }}</p>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                       </div>
+                                       <div class="booking-actions">
+                                          <a href="{% url 'edit_booking' booking_id=booking.id %}" class="action-button edit-button">Edit</a>
+                                            <a href="{% url 'delete_booking' booking_id=booking.id %}" class="action-button delete-button">Delete</a>
+                                             <button class="action-button view-button">View</button>
+                                       </div>
+                                    </div>
+                                </div>
+                           {% endfor %}
+                        {% else %}
+                            <p>You haven't received any bookings yet.</p>
+                        {% endif %}
+                    </div>
+                     <h2>Messages</h2>
+                        <div class="message-list">
+                                {% if guide_messages %}
+                                    {% for message in guide_messages %}
+                                    <div class="message-card">
+                                        <p><strong>From: </strong>{{message.sender.username}}</p>
+                                        <p><strong>Message: </strong>{{ message.content }}</p>
+                                         <p><strong>Time: </strong>{{message.timestamp}}</p>
+                                       <button class="action-button reply-button">Reply</button>
+                                    </div>
+                                   {% endfor %}
+                                {% else %}
+                                   <p>You have not received any messages yet</p>
+                                {% endif %}
+                         </div>
+                </div>
+                
+
+	<!-- Footer -->
+
+		
+			<div style="background-color: beige; height: 120px; color: black; display: flex; justify-content: center; align-items: center;" class="col text-center">
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+</div>
+	
+</div>
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'plugins/scrollTo/jquery.scrollTo.min.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23581568-13');
+</script>
+
+
+</body>
+
+</html> 

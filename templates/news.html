@@ -2,9 +2,121 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<title>News</title>
+<title>Guides</title>
+<style>
+	
+	.destinations_container.item_grid {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		gap: 20px;
+	}
+	
+	.guide-card {
+		background-color: white;
+		border-radius: 8px;
+		border: 1px solid #eee;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		overflow: hidden;
+		width: 300px;
+	}
+	.guide-card-image-link{
+		display: block;
+	}
+	.guide-card-img-container{
+		position: relative;
+	}
+	.guide-card-img{
+		width: 100%;
+		height: 250px;
+		object-fit: cover;
+	}
+	.certified-guide-badge {
+	  position: absolute;
+	  top: 10px;
+	  left: 10px;
+	  background-color: black;
+	  color: white;
+	  padding: 5px 10px;
+	  border-radius: 4px;
+	  font-size: 0.9em;
+	}
+	
+	.guide-card-body {
+		padding: 15px;
+	}
+	.guide-card-title {
+		font-size: 1.2em;
+		margin-bottom: 5px;
+	}
+	.guide-card-title a {
+	 text-decoration: none;
+	 color: black;
+	}
+	.guide-card-location {
+		font-size: 0.9em;
+		color: #555;
+		 margin-bottom: 5px;
+	}
+	
+	.guide-card-location i {
+	 margin-right: 5px;
+	}
+	.guide-card-price{
+		font-size: 1em;
+		font-weight: bold;
+		 margin-bottom: 5px;
+	}
+	
+	.guide-card-languages {
+		font-size: 0.9em; /* Adjusted to match email */
+		color: #777;
+		 margin-bottom: 5px;
+	}
+	
+	.guide-card-languages i {
+		margin-right: 5px;
+	}
+	
+	.guide-card-list {
+		margin-bottom: 10px;
+		font-size: 0.9em;
+	}
+	.guide-card-list ul{
+		list-style-type: none;
+		padding: 0;
+	}
+	.guide-card-list li{
+	  margin-bottom: 5px;
+	}
+	.guide-card-list li i{
+	   margin-right: 5px;
+	}
+	.message-button {
+		background-color: #fff;
+		color: #000;
+		border: 1px solid #ddd;
+		padding: 10px 15px;
+		border-radius: 5px;
+		cursor: pointer;
+		text-align: center;
+		display: block;
+		margin-top: 15px;
+	}
+	
+	.message-button:hover {
+	  background-color: #f0f0f0;
+	}
+	.message-button a {
+	 text-decoration: none;
+	 color: #000;
+	}
+	.message-button a i {
+	 margin-right: 5px;
+	}
+	
+</style>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Travello template project">
@@ -14,8 +126,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'styles/news.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'styles/news_responsive.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/destinations.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/destinations_responsive.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
@@ -29,33 +142,35 @@
 				<div class="col">
 					<div class="header_content d-flex flex-row align-items-center justify-content-start">
 						<div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
-							<div class="logo"><a href="..">Kavre Guide</a></div>
+							<div class="logo"><a href="{% url "index" %}">Kavre Guide</a></div>
+							<!-- Navigation -->
 							<nav class="main_nav">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
-									<li><a href="..">Home</a></li>
-									<li><a href="about">About Us</a></li>
-									<li class="active"><a href="news">News</a></li>
-									<li><a href="guide">I am a Guide</a></li>
-									<li><a href="contact">Contact</a></li>
+									<li ><a href="{% url 'index' %}">Home</a></li>
+									<li><a href="{% url 'about' %}">About Us</a></li>
+									<li class="active"><a href="{% url 'news' %}">Guides</a></li>
+									{% if user.is_authenticated %}
+										<li> <a href="{% url 'dashboard' %}">Dashboard</a></li>
+									 {% else %}
+										<li><a href="{% url 'guide' %}">I am a Guide</a></li>
+									  {% endif %}
+									<li><a href="{% url 'contact' %}">Contact</a></li>
+									<li><a href="{% url 'destinations' %}">Destinations</a></li>
 
 									{% if user.is_authenticated %}
-										<li><a href="logout">Logout</a></li>
+										<li><a href="{% url 'logout' %}">Logout</a></li>
 									{% else %}
-										<li><a href="register">Register</a></li>
-										<li><a href="login">Login</a></li>
+										<li><a href="{% url 'register' %}">Register</a></li>
+										<li><a href="{% url 'login' %}">Login</a></li>
 									{% endif %}
 								</ul>
 							</nav>
-							{% if user.is_authenticated %}
-								<div class="header_phone ml-auto">Welcome, {{user.first_name}}</div>
-							{% else %}
-								<div class="header_phone ml-auto">
-									<a style="color: white; font-size:xx-large;" href="https://www.instagram.com/nishant_ghimire/" target="_blank">
-										<i class="fa fa-instagram" aria-hidden="false"></i>
-									</a>
-								</div>
-							{% endif %}
 
+								
+								{% if user.is_authenticated %}
+									<div class="header_phone ml-auto">Welcome, {{ user.first_name }}</div>
+								{% endif %}
+								
 							<!-- Hamburger -->
 
 							<div class="hamburger ml-auto">
@@ -90,10 +205,9 @@
 			<ul>
 				<li><a href="..">Home</a></li>
 				<li><a href="about">About Us</a></li>
-				<li class="active"><a href="news">News</a></li>
+				<li><a href="news">News</a></li>
 				<li><a href="guide">I am a Guide</a></li>
-				
-				<li><a href="contact">Contact</a></li>
+				<li class="active"><a href="contact">Contact</a></li>
 
 				{% if user.is_authenticated %}
 					<li><a href="logout">Logout</a></li>
@@ -104,7 +218,6 @@
 			</ul>
 		</div>
 		<div class="menu_social">
-
 			{% if user.is_authenticated %}
 				<div class="menu_phone ml-auto">Logged in: {{user.first_name}} {{user.last_name}}</div>
 			{% else %}
@@ -124,7 +237,7 @@
 	<!-- Home -->
 
 	<div class="home">
-		<div class="background_image" style="background-image:url({% static 'images/news.jpg' %})"></div>
+		<div class="background_image" style="background-image:url({% static 'images/destinations.jpg' %})"></div>
 	</div>
 
 	<!-- Search -->
@@ -152,265 +265,69 @@
 		</div>
 	</div>
 
-	<!-- News -->
+	<!-- Destinations -->
 
-	<div class="news">
-		<div class="container">
-			<div class="row">
+<!-- Destinations (Guide Listings) -->
+<div class="destinations" id="destinations">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="section_subtitle">simply amazing guides</div>
+                <div class="section_title"><h2>Popular Guides</h2></div>
+            </div>
+        </div>
+       
+        <div class="row destinations_row">
+            <div class="col">
+                <div class="destinations_container item_grid">
+                    {% for guide in guides %}
+                        <div class="guide-card item">
+                            <a href="{% url 'guide_details' guide.id %}" class="guide-card-image-link">
+                                <div class="guide-card-img-container">
+                                    <img src="{{ guide.photo.url }}" alt="{{ guide.first_name }} {{ guide.last_name }}" class="guide-card-img">
+                                    {% if guide.certified_guide %}
+                                        <div class="certified-guide-badge">Certified Guide</div>
+                                    {% endif %}
+                                </div>
+                             </a>
+                            <div class="guide-card-body">
+                                <h2 class="guide-card-title"><a href="{% url 'guide_details' guide.id %}">{{ guide.first_name }} {{ guide.last_name }}</a></h2>
+                                <p class="guide-card-location"><i class="fas fa-map-marker-alt"></i>{{ guide.city_or_region }}, {{ guide.country }}</p>
+                                <p class="guide-card-price">Starting from ${{ guide.price }}</p>
+                                <p class="guide-card-languages"><i class="fas fa-globe"></i> Languages: {{ guide.tour_languages }}</p>
+                                 <div class="guide-card-list">
+                                   <ul>
+                                     <li><i class="fas fa-comment-dots"></i> Mother Tongue: {{ guide.mother_tongue }}</li>
+                                       <li><i class="fas fa-envelope"></i> Email: <a href="mailto:{{ guide.email }}">{{ guide.email }}</a></li>
+                                      <li><i class="fas fa-phone-alt"></i> Phone: {{ guide.phone_number }}</li>
+                                   </ul>
+                                 </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
 
-				<!-- News Container -->
-				<div class="col-lg-8">
-					<div class="news_container">
-						
-						<!-- News Post -->
-						<div class="news_post">
-							<div class="news_post_image"><img src="{% static 'images/news_4.jpg' %}" alt=""></div>
-							<div class="news_post_content">
-								<div class="news_post_date d-flex flex-row align-items-end justify-content-start">
-									<div>02</div>
-									<div>june</div>
-								</div>
-								<div class="news_post_title"><a href="#">Best tips to travel light</a></div>
-								<div class="news_post_category">
-									<ul>
-										<li><a href="#">lifestyle & travel</a></li>
-									</ul>
-								</div>
-								<div class="news_post_text">
-									<p>Pellentesque sit amet elementum ccumsan sit amet mattis eget, tristique at leo. Vivamus massa.Tempor massa et laoreet. Pellentesque sit amet elementum ccumsan sit amet mattis eget, tristique at leo. Vivamus massa.Tempor massa et laoreet.</p>
-								</div>
-								<div class="news_post_link"><a href="#">Read More</a></div>
-							</div>
-						</div>
+        <div class="row load_more_row">
+            <div class="col">
+                <div class="button load_more_button"><a href="#">Load More</a></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-						<!-- News Post -->
-						<div class="news_post">
-							<div class="news_post_image"><img src="{% static 'images/news_5.jpg' %}" alt=""></div>
-							<div class="news_post_content">
-								<div class="news_post_date d-flex flex-row align-items-end justify-content-start">
-									<div>02</div>
-									<div>june</div>
-								</div>
-								<div class="news_post_title"><a href="#">10 Amazing Destination for you this summer</a></div>
-								<div class="news_post_category">
-									<ul>
-										<li><a href="#">lifestyle & travel</a></li>
-									</ul>
-								</div>
-								<div class="news_post_text">
-									<p>Pellentesque sit amet elementum ccumsan sit amet mattis eget, tristique at leo. Vivamus massa.Tempor massa et laoreet. Pellentesque sit amet elementum ccumsan sit amet mattis eget, tristique at leo. Vivamus massa.Tempor massa et laoreet.</p>
-								</div>
-								<div class="news_post_link"><a href="#">Read More</a></div>
-							</div>
-						</div>
-
-						<!-- News Post -->
-						<div class="news_post">
-							<div class="news_post_image"><img src="{% static 'images/news_6.jpg' %}" alt=""></div>
-							<div class="news_post_content">
-								<div class="news_post_date d-flex flex-row align-items-end justify-content-start">
-									<div>02</div>
-									<div>june</div>
-								</div>
-								<div class="news_post_title"><a href="#">How to organize your perfect vacation</a></div>
-								<div class="news_post_category">
-									<ul>
-										<li><a href="#">lifestyle & travel</a></li>
-									</ul>
-								</div>
-								<div class="news_post_text">
-									<p>Pellentesque sit amet elementum ccumsan sit amet mattis eget, tristique at leo. Vivamus massa.Tempor massa et laoreet. Pellentesque sit amet elementum ccumsan sit amet mattis eget, tristique at leo. Vivamus massa.Tempor massa et laoreet.</p>
-								</div>
-								<div class="news_post_link"><a href="#">Read More</a></div>
-							</div>
-						</div>
-
-					</div>
-
-					<!-- Pagination -->
-					<div class="pagination">
-						<ul class="d-flex flex-row align-items-start justify-content-start">
-							<li class="active"><a href="#">1.</a></li>
-							<li><a href="#">2.</a></li>
-							<li><a href="#">3.</a></li>
-							<li><a href="#">4.</a></li>
-							<li><a href="#">5.</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<!-- News Sidebar -->
-				<div class="col-lg-4">
-					<div class="news_sidebar">
-
-						<!-- Categories -->
-						<div class="categories">
-							<div class="sidebar_title">Categories</div>
-							<div class="sidebar_list">
-								<ul>
-									<li><a href="#"><div class="d-flex flex-row align-items-start justify-content-start">Travels<span class="ml-auto">(09)</span></div></a></li>
-									<li><a href="#"><div class="d-flex flex-row align-items-start justify-content-start">Organization<span class="ml-auto">(12)</span></div></a></li>
-									<li><a href="#"><div class="d-flex flex-row align-items-start justify-content-start">Tips & Tricks<span class="ml-auto">(16)</span></div></a></li>
-									<li><a href="#"><div class="d-flex flex-row align-items-start justify-content-start">Uncategorized<span class="ml-auto">(22)</span></div></a></li>
-								</ul>
-							</div>
-						</div>
-
-						<!-- Latest News -->
-						<div class="latest">
-							<div class="sidebar_title">Latest News</div>
-							<div class="latest_container">
-								
-								<!-- Latest Post -->
-								<div class="latest_post d-flex flex-row align-items-start justify-content-start">
-									<div class="latest_post_image"><img src="{% static 'images/latest_1.jpg' %}" alt=""></div>
-									<div class="latest_post_content">
-										<div class="latest_post_date d-flex flex-row align-items-end justify-content-start">
-											<div class="latest_post_day">02</div>
-											<div class="latest_post_month">june</div>
-										</div>
-										<div class="latest_post_title"><a href="#">Best tips to travel light</a></div>
-										<div class="latest_post_text"><p>Pellentesque sit amet..</p></div>
-									</div>
-								</div>
-
-								<!-- Latest Post -->
-								<div class="latest_post d-flex flex-row align-items-start justify-content-start">
-									<div class="latest_post_image"><img src="{% static 'images/latest_2.jpg' %}" alt=""></div>
-									<div class="latest_post_content">
-										<div class="latest_post_date d-flex flex-row align-items-end justify-content-start">
-											<div class="latest_post_day">02</div>
-											<div class="latest_post_month">june</div>
-										</div>
-										<div class="latest_post_title"><a href="#">Best tips to travel light</a></div>
-										<div class="latest_post_text"><p>Pellentesque sit amet..</p></div>
-									</div>
-								</div>
-
-								<!-- Latest Post -->
-								<div class="latest_post d-flex flex-row align-items-start justify-content-start">
-									<div class="latest_post_image"><img src="{% static 'images/latest_3.jpg' %}" alt=""></div>
-									<div class="latest_post_content">
-										<div class="latest_post_date d-flex flex-row align-items-end justify-content-start">
-											<div class="latest_post_day">02</div>
-											<div class="latest_post_month">june</div>
-										</div>
-										<div class="latest_post_title"><a href="#">Best tips to travel light</a></div>
-										<div class="latest_post_text"><p>Pellentesque sit amet..</p></div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-
-						<div class="travello">
-							<div class="background_image" style="background-image:url({% static 'images/travello.jpg' %})"></div>
-							<div class="travello_content">
-								<div class="travello_content_inner">
-									<div></div>
-									<div></div>
-								</div>
-							</div>
-							<div class="travello_container">
-								<a href="#">
-									<div class="d-flex flex-column align-items-center justify-content-end">
-										<span class="travello_title">Get a 20% Discount</span>
-										<span class="travello_subtitle">Buy Your Vacation Online Now</span>
-									</div>
-								</a>
-							</div>
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Footer -->
-
-	{% comment %} <footer class="footer">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{% static 'images/footer_1.jpg' %}" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="newsletter">
-						<div class="newsletter_title_container text-center">
-							<div class="newsletter_title">Subscribe to our newsletter to get the latest trends & news</div>
-							<div class="newsletter_subtitle">Join our database NOW!</div>
-						</div>
-						<div class="newsletter_form_container">
-							<form action="#" class="newsletter_form d-flex flex-md-row flex-column align-items-start justify-content-between" id="newsletter_form">
-								<div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
-									<div><input type="text" class="newsletter_input newsletter_input_name" id="newsletter_input_name" placeholder="Name" required="required"><div class="input_border"></div></div>
-									<div><input type="email" class="newsletter_input newsletter_input_email" id="newsletter_input_email" placeholder="Your e-mail" required="required"><div class="input_border"></div></div>
-								</div>
-								<div><button style="background-color: brown;" class="newsletter_button">subscribe</button></div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row footer_contact_row">
-				<div class="col-xl-10 offset-xl-1">
-					<div class="row">
-
-						<!-- Footer Contact Item -->
-						<div class="col-xl-4 footer_contact_col">
-							<div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
-								<div class="footer_contact_icon"><img src="{% static 'images/sign.svg' %}" alt=""></div>
-								<div class="footer_contact_title">give us a call</div>
-								<div class="footer_contact_list">
-									<ul>
-										<li>Office Landline: +44 5567 32 664 567</li>
-										<li>Mobile: +44 5567 89 3322 332</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-						<!-- Footer Contact Item -->
-						<div class="col-xl-4 footer_contact_col">
-							<div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
-								<div class="footer_contact_icon"><img src="{% static 'images/trekking.svg' %}" alt=""></div>
-								<div class="footer_contact_title">come & drop by</div>
-								<div class="footer_contact_list">
-									<ul style="max-width:190px">
-										<li>4124 Barnes Street, Sanford, FL 32771</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-						<!-- Footer Contact Item -->
-						<div class="col-xl-4 footer_contact_col">
-							<div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
-								<div class="footer_contact_icon"><img src="{% static 'images/around.svg' %}" alt=""></div>
-								<div class="footer_contact_title">send us a message</div>
-								<div class="footer_contact_list">
-									<ul>
-										<li>youremail@gmail.com</li>
-										<li>Office@yourbusinessname.com</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div> {% endcomment %}
 		<div style="background-color: beige; height: 120px; color: black; display: flex; justify-content: center; align-items: center;" class="col text-center">
-			Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made by ANNR</a>
-			<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> </div>
-
+			Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</a>
+		</div>
 <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
 <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
 <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
 <script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
 <script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
-<script src="{% static 'js/news.js' %}"></script>
+<script src="{% static 'js/destinations.js' %}"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
@@ -425,4 +342,5 @@
 
 </body>
 
+<!-- Mirrored from preview.colorlib.com/theme/travello/destinations.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Oct 2020 12:13:01 GMT -->
 </html>

@@ -29,32 +29,33 @@
 				<div class="col">
 					<div class="header_content d-flex flex-row align-items-center justify-content-start">
 						<div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
-							<div class="logo"><a href="..">Kavre Guide</a></div>
+							<div class="logo"><a href="index">Kavre Guide</a></div>
 							<nav class="main_nav">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
-									<li><a href="..">Home</a></li>
-									<li class="active"><a href="about">About Us</a></li>
-									<li><a href="news">News</a></li>
-									<li><a href="guide">I am a Guide</a></li>
-									<li><a href="contact">Contact</a></li>
+									<li ><a href="{% url 'index' %}">Home</a></li>
+									<li class="active"><a href="{% url 'about' %}">About Us</a></li>
+									<li ><a href="{% url 'news' %}">Guides</a></li>
+									{% if user.is_authenticated %}
+										<li> <a href="{% url 'dashboard' %}">Dashboard</a></li>
+									 {% else %}
+										<li><a href="{% url 'guide' %}">I am a Guide</a></li>
+									  {% endif %}
+									<li><a href="{% url 'contact' %}">Contact</a></li>
+									<li><a href="{% url 'destinations' %}">Destinations</a></li>
 
 									{% if user.is_authenticated %}
-										<li><a href="logout">Logout</a></li>
+										<li><a href="{% url 'logout' %}">Logout</a></li>
 									{% else %}
-										<li><a href="register">Register</a></li>
-										<li><a href="login">Login</a></li>
+										<li><a href="{% url 'register' %}">Register</a></li>
+										<li><a href="{% url 'login' %}">Login</a></li>
 									{% endif %}
 								</ul>
 							</nav>
-							{% if user.is_authenticated %}
-								<div class="header_phone ml-auto">Welcome, {{user.first_name}}</div>
-							{% else %}
-								<div class="header_phone ml-auto">
-									<a style="color: white; font-size:xx-large;" href="https://www.instagram.com/nishant_ghimire/" target="_blank">
-										<i class="fa fa-instagram" aria-hidden="false"></i>
-									</a>
-								</div>
-							{% endif %}
+								
+								{% if user.is_authenticated %}
+									<div class="header_phone ml-auto">Welcome, {{ user.first_name }}</div>
+								{% endif %}
+								
 
 							<!-- Hamburger -->
 
@@ -363,81 +364,10 @@
 	</div>
 
 	<!-- Footer -->
-{% comment %} 
-	<footer class="footer">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{% static 'images/footer_1.jpg' %}" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="newsletter">
-						<div class="newsletter_title_container text-center">
-							<div class="newsletter_title">Subscribe to our newsletter to get the latest trends & news</div>
-							<div class="newsletter_subtitle">Join our database NOW!</div>
-						</div>
-						<div class="newsletter_form_container">
-							<form action="#" class="newsletter_form d-flex flex-md-row flex-column align-items-start justify-content-between" id="newsletter_form">
-								<div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
-									<div><input type="text" class="newsletter_input newsletter_input_name" id="newsletter_input_name" placeholder="Name" required="required"><div class="input_border"></div></div>
-									<div><input type="email" class="newsletter_input newsletter_input_email" id="newsletter_input_email" placeholder="Your e-mail" required="required"><div class="input_border"></div></div>
-								</div>
-								<div><button style="background-color: brown;" class="newsletter_button">subscribe</button></div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row footer_contact_row">
-				<div class="col-xl-10 offset-xl-1">
-					<div class="row">
-
-						<!-- Footer Contact Item -->
-						<div class="col-xl-4 footer_contact_col">
-							<div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
-								<div class="footer_contact_icon"><img src="{% static 'images/sign.svg' %}" alt=""></div>
-								<div class="footer_contact_title">give us a call</div>
-								<div class="footer_contact_list">
-									<ul>
-										<li>Office Landline: +44 5567 32 664 567</li>
-										<li>Mobile: +44 5567 89 3322 332</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-						<!-- Footer Contact Item -->
-						<div class="col-xl-4 footer_contact_col">
-							<div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
-								<div class="footer_contact_icon"><img src="{% static 'images/trekking.svg' %}" alt=""></div>
-								<div class="footer_contact_title">come & drop by</div>
-								<div class="footer_contact_list">
-									<ul style="max-width:190px">
-										<li>4124 Barnes Street, Sanford, FL 32771</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-						<!-- Footer Contact Item -->
-						<div class="col-xl-4 footer_contact_col">
-							<div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
-								<div class="footer_contact_icon"><img src="{% static 'images/around.svg' %}" alt=""></div>
-								<div class="footer_contact_title">send us a message</div>
-								<div class="footer_contact_list">
-									<ul>
-										<li>youremail@gmail.com</li>
-										<li>Office@yourbusinessname.com</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div> {% endcomment %}
+		
 		<div style="background-color: beige; height: 120px; color: black; display: flex; justify-content: center; align-items: center;" class="col text-center">
-			Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made by ANNR</a>
-			<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> </div>
+			Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+			</div>
 	</footer>
 </div>
 
