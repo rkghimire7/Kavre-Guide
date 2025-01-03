@@ -1,13 +1,13 @@
 {% load static %}
-
+{% load accounts_extras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<title>{{ guide.first_name }} {{ guide.last_name }}</title>
-<style>
-    
-.guide-details {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>{{ guide.first_name }} {{ guide.last_name }}</title>
+    <style>
+        /* Your CSS styles here */
+           .guide-details {
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
@@ -71,27 +71,78 @@
    background-color: #f2f2f2;
     cursor: not-allowed;
 }
-</style>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Travello template project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
-<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'styles/destinations.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'styles/destinations_responsive.css' %}">
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+    /* Calendar styles */
+.availability-calendar {
+  margin-top: 10px;
+  
+  }
+  .availability-calendar h3{
+      text-align: center;
+      margin-bottom: 5px;
+  }
+  .calendar-month{
+      border: 1px solid #e0e0e0;
+      padding: 5px;
+    margin-bottom: 5px;
+  }
+ .calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 0.9em;
+    color: #888;
+    padding: 2px;
+
+  }
+
+ .calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .calendar-day {
+     display: flex;
+    align-items: center;
+      justify-content: center;
+    height: 25px;
+      width: 25px;
+    text-align: center;
+    border: 1px solid #f0f0f0;
+    font-size: 0.85em;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+ .calendar-day.available {
+   background-color: rgba(0, 128, 0, 0.2);
+  
+  }
+
+ .calendar-day.unavailable {
+  background-color: #eee;
+
+   }
+   .calendar-day.empty{
+    border: none;
+    cursor: default;
+  }
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Travello template project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/destinations.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/destinations_responsive.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
 </head>
 <body>
-
-<div class="super_container">
-	
-	<!-- Header -->
-
-	<header class="header">
+     <!-- Your HTML structure from the previous response goes here -->
+       <!-- Header -->
+    <header class="header">
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -227,53 +278,35 @@
                 </p>
             </div>
         </div>
-    
-        <!-- Availability calendar -->
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <h3>Guide Availability</h3>
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <tr>
-                            <th>Su</th>
-                            <th>Mo</th>
-                            <th>Tu</th>
-                            <th>We</th>
-                            <th>Th</th>
-                            <th>Fr</th>
-                            <th>Sa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                       
-                        <tr>
-                            <td class="available">1</td>
-                            <td class="unavailable">2</td>
-                            <td class="available">3</td>
-                            <td class="available">4</td>
-                            <td class="unavailable">5</td>
-                            <td class="available">6</td>
-                            <td class="unavailable">7</td>
-                        </tr>
-                        <tr>
-                            <td class="available">8</td>
-                            <td class="unavailable">9</td>
-                            <td class="available">10</td>
-                            <td class="available">11</td>
-                            <td class="unavailable">12</td>
-                            <td class="available">13</td>
-                            <td class="unavailable">14</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
+ <!-- Availability calendar -->
+ <div class="availability-calendar">
+    {% if calendar_data %}
+         {% for cal_data in calendar_data %}
+         <h3>{{cal_data.month_name}}</h3>
+         <div class="calendar-month">
+         <div class="calendar-header">
+            <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+          </div>
+             <div class="calendar-days">
+              {% for i in cal_data.first_day_range %}
+              <div class="calendar-day empty"></div>
+              {% endfor %}
+              {% for day in cal_data.days %}
+                    <div class="calendar-day {% if day.is_available %}available{% else %}unavailable{% endif %}">{{ day.day }}</div>
+                  {% endfor %}
+           </div>
+           </div>
+        {% endfor %}
+     {% endif %}
+  </div>
+ <div style="display: flex; align-items:center; margin-top: 5px;">
+     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #e6f7ff; margin-right:5px;"></span>Available
+      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #f2f2f2; margin-left:10px; margin-right:5px;"></span>Not Available
+  </div>
 
 
 <div style="background-color: beige; height: 120px; color: black; display: flex; justify-content: center; align-items: center;" class="col text-center">
-			Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a> </div>
+			Copyright ©<script>document.write(new Date().getFullYear());</script> All rights reserved </a> </div>
 <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
 <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>

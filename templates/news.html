@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load accounts_extras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +10,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: flex-start;
-		gap: 20px;
+		gap: 30px; /* Increased the gap */
 	}
 	
 	.guide-card {
@@ -318,7 +318,7 @@
 </div>
 
 		<div style="background-color: beige; height: 120px; color: black; display: flex; justify-content: center; align-items: center;" class="col text-center">
-			Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</a>
+			Copyright ©<script>document.write(new Date().getFullYear());</script> All rights reserved</a>
 		</div>
 <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
@@ -339,8 +339,5 @@
   gtag('config', 'UA-23581568-13');
 </script>
 
-
 </body>
-
-<!-- Mirrored from preview.colorlib.com/theme/travello/destinations.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Oct 2020 12:13:01 GMT -->
 </html>
