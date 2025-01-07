@@ -2,10 +2,17 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Mirrored from preview.colorlib.com/theme/travello/destinations.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Oct 2020 12:13:01 GMT -->
 <head>
 <title>Destinations</title>
+<style>
+	.header_phone {
+		margin-right: 35px;  /* Increased margin */
+		white-space: nowrap;
+		padding-left: 20px;  /*Added padding left*/
+		border-left: 1px ; /*Added left border to separate*/
+	}
+	
+</style>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Travello template project">
@@ -203,11 +210,12 @@
                             <div class="destination_subtitle"><p>{{ destination.desc }}</p></div>
                             <div class="destination_price">From ${{ destination.price }}</div>
                             <div class="destination_list">
-                                <ul>
-                                    <li>5 Stars Hotel</li>
-                                    <li>All Inclusive</li>
-                                    <li>Flight tickets included</li>
-                                    <li>Guided visits</li>
+                                 <ul>
+									{% if destination.list_items %}
+									{% for item in destination.list_items %}
+										<li>{{ item }}</li>
+									{% endfor %}
+								{% endif %}
                                 </ul>
                             </div>
                         </div>
@@ -219,7 +227,6 @@
         </div>
     </div>
 </div>
-
 <!-- Footer -->
 <div style="background-color: beige; height: 120px; color: black; display: flex; justify-content: center; align-items: center;" class="col text-center">
     Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
@@ -232,7 +239,7 @@
 <script src="{% static 'plugins/easing/easing.js' %}"></script>
 <script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
 <script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
-<script src="{% static 'js/destinations.js' %}"></script>
+<script src="{% static 'js/destination.js' %}"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>

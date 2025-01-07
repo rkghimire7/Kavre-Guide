@@ -5,13 +5,12 @@
 <head>
     <title>Travel Guide</title>
     <style>
-        .header_phone {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-left: 30px; 
+		.header_phone {
+            margin-right: 35px;  /* Increased margin */
+            white-space: nowrap;
+            padding-left: 20px;  /*Added padding left*/
+            border-left: 1px ; /*Added left border to separate*/
         }
-
         .welcome_text {
             display: flex;
             flex-direction: column;
@@ -89,14 +88,11 @@
                                 </nav>
 
                                 <!-- Welcome Section (If user is authenticated) -->
-                                {% if user.is_authenticated %}
-                                    <div class="header_phone ml-auto">
-                                        <div class="welcome_text">
-                                            <span class="welcome_message">Welcome,</span>
-                                            <span class="username">{{ user.first_name }}</span>
-                                        </div>
-                                    </div>
-                                {% endif %}
+								<div class="header_phone ml-auto">
+									{% if user.is_authenticated %}
+										Welcome, {{ user.first_name }}
+									{% endif %}
+								</div>
 
                                 <!-- Hamburger Menu -->
                                 <div class="hamburger ml-auto">
@@ -468,7 +464,7 @@
 	<!-- Footer -->
 
 		
-			<div style="background-color: beige; height: 120px; color: black; display: flex; justify-content: center; align-items: center;" class="col text-center">
+			<div style="background-color: 	rgb(248,248,248); height: 120px; color: black; display: flex; justify-content: center; align-items: center;" class="col text-center">
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> </div>
 	

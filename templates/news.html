@@ -6,116 +6,128 @@
 <title>Guides</title>
 <style>
 	
-	.destinations_container.item_grid {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-		gap: 30px; /* Increased the gap */
-	}
 	
-	.guide-card {
-		background-color: white;
-		border-radius: 8px;
-		border: 1px solid #eee;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		overflow: hidden;
-		width: 300px;
-	}
-	.guide-card-image-link{
-		display: block;
-	}
-	.guide-card-img-container{
-		position: relative;
-	}
-	.guide-card-img{
-		width: 100%;
-		height: 250px;
-		object-fit: cover;
-	}
-	.certified-guide-badge {
-	  position: absolute;
-	  top: 10px;
-	  left: 10px;
-	  background-color: black;
-	  color: white;
-	  padding: 5px 10px;
-	  border-radius: 4px;
-	  font-size: 0.9em;
-	}
-	
-	.guide-card-body {
-		padding: 15px;
-	}
-	.guide-card-title {
-		font-size: 1.2em;
-		margin-bottom: 5px;
-	}
-	.guide-card-title a {
-	 text-decoration: none;
-	 color: black;
-	}
-	.guide-card-location {
-		font-size: 0.9em;
-		color: #555;
-		 margin-bottom: 5px;
-	}
-	
-	.guide-card-location i {
-	 margin-right: 5px;
-	}
-	.guide-card-price{
-		font-size: 1em;
-		font-weight: bold;
-		 margin-bottom: 5px;
-	}
-	
-	.guide-card-languages {
-		font-size: 0.9em; /* Adjusted to match email */
-		color: #777;
-		 margin-bottom: 5px;
-	}
-	
-	.guide-card-languages i {
-		margin-right: 5px;
-	}
-	
-	.guide-card-list {
-		margin-bottom: 10px;
-		font-size: 0.9em;
-	}
-	.guide-card-list ul{
-		list-style-type: none;
-		padding: 0;
-	}
-	.guide-card-list li{
-	  margin-bottom: 5px;
-	}
-	.guide-card-list li i{
-	   margin-right: 5px;
-	}
-	.message-button {
-		background-color: #fff;
-		color: #000;
-		border: 1px solid #ddd;
-		padding: 10px 15px;
-		border-radius: 5px;
-		cursor: pointer;
-		text-align: center;
-		display: block;
-		margin-top: 15px;
-	}
-	
-	.message-button:hover {
-	  background-color: #f0f0f0;
-	}
-	.message-button a {
-	 text-decoration: none;
-	 color: #000;
-	}
-	.message-button a i {
-	 margin-right: 5px;
-	}
-	
+	.header_phone {
+        margin-right: 35px;
+        white-space: nowrap;
+        padding-left: 20px;
+        border-left: 1px ;
+ }
+.destinations.card{
+	background-color: white;
+	border-radius: 8px;
+	border: 1px solid #eee;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin: 10px auto;
+    max-width: 1200px;
+}
+.destinations_container.item_grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+}
+.destinations .guide-card.item {
+    background-color: white !important;
+    border-radius: 8px !important;
+    border: 1px solid #eee !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    overflow: hidden !important;
+	width: 376px !important;
+	display: flex !important;
+	flex-direction: column !important;
+	position: relative !important;
+    margin-bottom: 15px;
+}
+.destinations .guide-card.item .guide-card-image-link {
+    display: block;
+}
+.destinations .guide-card.item .guide-card-img-container {
+    position: relative;
+}
+.destinations .guide-card.item .guide-card-img {
+    width: 100%;
+    height: 200px; /* Set consistent height for images to prevent misalign */
+    object-fit: cover;
+}
+.destinations .guide-card.item .certified-guide-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.destinations .guide-card.item .guide-card-body {
+    padding: 15px;
+}
+.destinations .guide-card.item .guide-card-title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+.destinations .guide-card.item .guide-card-title a {
+    text-decoration: none;
+    color: black;
+}
+.destinations .guide-card.item .guide-card-location {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 5px;
+}
+.destinations .guide-card.item .guide-card-location i {
+    margin-right: 5px;
+}
+.destinations .guide-card.item .guide-card-price {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.destinations .guide-card.item .guide-card-languages {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 5px;
+}
+.destinations .guide-card.item .guide-card-languages i {
+    margin-right: 5px;
+}
+.destinations .guide-card.item .guide-card-list {
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+.destinations .guide-card.item .guide-card-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+.destinations .guide-card.item .guide-card-list li {
+    margin-bottom: 5px;
+}
+.destinations .guide-card.item .guide-card-list li i {
+    margin-right: 5px;
+}
+.destinations .guide-card.item .message-button {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin-top: 15px;
+}
+.destinations .guide-card.item .message-button:hover {
+    background-color: #f0f0f0;
+}
+.destinations .guide-card.item .message-button a {
+    text-decoration: none;
+    color: #000;
+}
+.destinations .guide-card.item .message-button a i {
+    margin-right: 5px;
+}
 </style>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -167,9 +179,11 @@
 							</nav>
 
 								
+							<div class="header_phone ml-auto">
 								{% if user.is_authenticated %}
-									<div class="header_phone ml-auto">Welcome, {{ user.first_name }}</div>
+									Welcome, {{ user.first_name }}
 								{% endif %}
+							</div>
 								
 							<!-- Hamburger -->
 
@@ -268,10 +282,10 @@
 	<!-- Destinations -->
 
 <!-- Destinations (Guide Listings) -->
-<div class="destinations" id="destinations">
+<div class="destinations card" id="destinations">
     <div class="container">
         <div class="row">
-            <div class="col text-center">
+            <div class="col text-center"><br>
                 <div class="section_subtitle">simply amazing guides</div>
                 <div class="section_title"><h2>Popular Guides</h2></div>
             </div>
@@ -329,15 +343,16 @@
 <script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
 <script src="{% static 'js/destinations.js' %}"></script>
 
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-<script>
+ <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'UA-23581568-13');
-</script>
-
+  
+</script> 
 </body>
 </html>

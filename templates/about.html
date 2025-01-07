@@ -5,6 +5,15 @@
 
 <head>
 <title>About us</title>
+<style>
+	.header_phone {
+		margin-right: 35px;  /* Increased margin */
+		white-space: nowrap;
+		padding-left: 20px;  /*Added padding left*/
+		border-left: 1px ; /*Added left border to separate*/
+	}
+	
+</style>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Travello template project">
@@ -52,10 +61,11 @@
 								</ul>
 							</nav>
 								
+							<div class="header_phone ml-auto">
 								{% if user.is_authenticated %}
-									<div class="header_phone ml-auto">Welcome, {{ user.first_name }}</div>
+									Welcome, {{ user.first_name }}
 								{% endif %}
-								
+							</div>
 
 							<!-- Hamburger -->
 

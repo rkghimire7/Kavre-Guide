@@ -586,10 +586,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <head>
 <title>Dashboard</title>
 <style>
-    .header {
-        background-color: #333;
-        padding: 10px 0;
-      }
+    
       
       .header_container {
         display: flex;
@@ -991,13 +988,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                             <p><strong>Party Size:</strong> {{booking.party_size}}</p>
                             <div class="booking-message-wrapper">
                                 <p><strong>Message from tourist:</strong> {{ booking.message }}</p>
-                                  {% if booking.messages.all %}
-                                    {% for message in booking.messages.all %}
-                                         <div class="tourguide-message">
-                                             <p><strong>Tourist says: </strong>{{ message.content }}</p>
-                                          </div>
-                                      {% endfor %}
-                                  {% endif %}
+                                
                              </div> 
                            <div class="booking-actions">
                             <a href="{% url 'edit_booking' booking_id=booking.id %}" class="action-button edit-button">Edit Status</a>

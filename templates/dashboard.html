@@ -227,12 +227,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <html lang="en">
 
 <head>
-<title>About us</title>
+<title>Dashboard</title>
 <style>
-    .header {
-        background-color: #333;
-        padding: 10px 0;
-      }
+   
       
       .header_container {
         display: flex;
@@ -278,9 +275,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
           margin-right: 5px;
       }
       
-      .header_phone{
-       margin-left: auto;
-      }
+      .header_phone {
+		margin-right: 35px;  /* Increased margin */
+		white-space: nowrap;
+		padding-left: 20px;  /*Added padding left*/
+		border-left: 1px ; /*Added left border to separate*/
+	}
+	
       
       .hamburger {
        color: white;
@@ -433,15 +434,28 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         width: 100%;
       }
       
-      .booking-card-header .guide-card-img{
-          width: 100%;
-          height: 200px;
-          object-fit: cover;
-      }
-      
+      .booking-card-header .guide-card-img {
+        width: 100%;
+        height: 200px; /* Set a fixed height for images */
+        object-fit: cover;
+    }
       .booking-card-body {
           padding: 15px;
       }
+      .booking-card {
+        background-color: white;
+        border-radius: 8px;
+        border: 1px solid #eee;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 300px; /* Set a fixed width for the card */
+        display:flex;
+        flex-direction: column;
+    }
+    .booking-card-header{
+        width: 100%;
+    }
+    
       .booking-actions {
           margin-top: 15px;
       }
@@ -610,11 +624,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <div class="booking-list">
             {% if user_bookings %}
                 {% for booking in user_bookings %}
-                    <div class="booking-card">
-                         {% if booking.guide %}
+                <div class="booking-card">
+                    {% if booking.guide %}
                         <div class="booking-card-header">
-                              <img src="{{ booking.guide.photo.url }}" alt="{{ booking.guide.first_name }} {{ booking.guide.last_name }}" class="booking-card-img">
-                         </div>
+                            <img src="{{ booking.guide.photo.url }}" alt="{{ booking.guide.first_name }} {{ booking.guide.last_name }}" class="guide-card-img">
+                        </div>
                          {% endif %}
                         <div class="booking-card-body">
                             {% if booking.guide %}
