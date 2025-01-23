@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
-from django.contrib.auth import authenticate, login as auth_login 
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .forms import GuideForm, BookingForm, ReplyForm, AvailabilityForm
 from travello.models import Guide , Destination, Contact, Booking, Message
 from django.urls import reverse
@@ -10,6 +10,11 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.hashers import check_password
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib import messages
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as auth_login
+from django.urls import reverse
 from django.contrib import messages
 
 
@@ -68,7 +73,9 @@ def register(request):
 
 
 def logout(request):
- return auth_views.LogoutView.as_view(next_page="/")(request)
+    auth_logout(request)
+    messages.success(request, "You have been successfully logged out.")
+    return redirect('login')
 
 def contact(request):
  if request.method == 'POST':
@@ -233,27 +240,47 @@ def delete_booking(request, booking_id):
      return redirect(reverse('dashboard'))
  return render(request, 'delete_booking.html', {'booking': booking})
 
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import check_password
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from travello.models import Guide
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
 def guide_login(request):
-    print("guide_login view hit")
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(f"username is : {username} and password is {password}")
+
         try:
             guide = Guide.objects.get(username=username)
-            print(password, guide.password)
-            if check_password(password, guide.password):
-                request.session['guide_id'] = guide.id
-                print(f"Guide logged in: guide_id = {request.session.get('guide_id')}")
-                return redirect(reverse('guide_dashboard', kwargs={'guide_id': guide.id}))
+
+            if check_password(password, guide.password):  # Correct password
+                user, created = User.objects.get_or_create(
+                    username=username,
+                    defaults={
+                        'email': guide.email,
+                        'first_name': guide.first_name,
+                        'last_name': guide.last_name
+                    }
+                )
+                user.set_password(password)
+                user.save()
+
+                user = authenticate(username=username, password=password)
+                if user:
+                    auth_login(request, user)
+                    request.session['guide_id'] = guide.id
+                    messages.success(request, 'Guide logged in successfully.')
+                    return redirect(reverse('guide_dashboard', kwargs={'guide_id': guide.id}))
             else:
-                print("Invalid credentials - Password mismatch")
-                messages.error(request, 'Invalid credentials')
-                return redirect(reverse("guide_login"))
+                messages.error(request, 'Invalid credentials.')
+
         except Guide.DoesNotExist:
-           print("Invalid credentials - User Does not exist")
-           messages.error(request, 'Invalid credentials')
-           return redirect(reverse("guide_login"))
+            messages.error(request, 'Guide not found.')
+
     return render(request, 'login.html')
 
 

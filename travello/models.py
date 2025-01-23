@@ -37,6 +37,9 @@ class Destination(models.Model):
         return self.name
 
 
+from django.contrib.auth.hashers import make_password, check_password
+from django.db import models
+
 class Guide(models.Model):
     CIVILITY_CHOICES = [
         ('Mr', 'Mr'),
@@ -63,19 +66,22 @@ class Guide(models.Model):
     # New price field
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
-    #New guide authentication fields
+    # Guide authentication fields
     username = models.CharField(max_length=150, unique=True)
-    password = models.CharField(max_length=128)  
+    password = models.CharField(max_length=128)  # Password field for hashing
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.country})"
-        
+
     def save(self, *args, **kwargs):
-       if not self.pk: 
-        self.password = make_password(self.password) 
-       super().save(*args, **kwargs)
-
-
+        try:
+            # Hash password if it’s not already hashed
+            if self.password and not self.password.startswith(('pbkdf2_sha256$', 'bcrypt$')):
+                self.password = make_password(self.password)
+            super().save(*args, **kwargs)
+        except Exception as e:
+            print(f"Error in save method: {e}")
+            raise
 
 class Contact(models.Model):
     name = models.CharField(max_length=255)
